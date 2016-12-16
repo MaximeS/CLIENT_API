@@ -8,18 +8,9 @@
 module.exports = {   
 
 	attributes: {
-		employeeId: { 
-			type: 'INTEGER',
-			unique: true,
-			required: true
-		}, 
 		isAdmin:{
 			type: 'boolean',
 			defaultsTo: false
-		},
-		rank:{
-			type: 'INTEGER',
-			defaultsTo: 0
 		},
 		firstName: {
 			type: 'STRING',
