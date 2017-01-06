@@ -19,7 +19,7 @@ module.exports = {
 	},
 	
 	addLog: function (req,res) {
-		LogConnexion.create( {employeeId :req.employeeId , message:req.message}, function function(err,created){
+		LogConnexion.create( {employeeId :req.param('employeeId'), message:req.param('message')}, function function(err,created){
 			if(!err) {
 				console.log('Log créé.');
 			}
