@@ -49,8 +49,14 @@ module.exports.policies = {
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
 
-  '*' : [ 'isAuthenticated' ],
-	AuthController : {
-		'*' : true
-	},
+  '*': 'authenticated',
+    AuthController : {
+      'login' : [],
+      'loginAdmin' : [],
+    },
+    
+  UserController :{
+    'AddUser' : [],
+  },
+
 };
