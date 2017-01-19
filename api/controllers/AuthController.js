@@ -6,93 +6,49 @@
  */
 
 
-var bcrypt = require('bcryptjs');
-var _userController = require('./EmployeeController');
+var passport = require ('passport');
+
+function onPassportAuth(req, res, error, user, info)
+{
+    if(error) return res.serverError(error);
+    if(!user) return res.unauthorized(null,info);
+
+	var expDate = new Date();
+	expDate.setDate(expDate.getDate() + 2);
+    token = SecurityService.createToken(user);
+    res.cookie("access_token", token, { httpOnly: true, expires: expDate })
+    
+    return res.ok (
+        {
+            token : token,
+            user:user
+        }
+    )
+}
+
 
 module.exports = {
-    login: function(req,res){
-        console.log("Reçus")
-        var email = req.param('email');
-        var password = req.param('password');
-        if(!email || !password) return res.json(401,{err:'email and password are required'})
-        Employee.findOne({email:email}, function(err,employee){
-            if(err)console.log(err);
-            if(err) return res.json(403, {err:'forbidden'});
-            if(!employee){
-                console.log("Erreur1"); 
-                return res.json(401,{err:'invalid email or password'});
-            }
-            Employee.comparePassword(password,employee, function(err,valid){
-                if(err)console.log(err);
-                if(err) return res.json(403, {err:'forbidden'});
-                if(!valid){console.log("Erreur2"); return res.json(401,{err:'invalid email or password'});}
-                token = JwtHandler.generate({email:employee.email,id: employee.id});
-                employee.token = token;
-                employee.save(function(err){
-                    if(err){
-                        console.log(err); 
-                        return res.json(403, {err:'forbidden'});
-                    } 
-                    return res.json(
-                        {
-                            employee: employee,
-                            token:token
-                        }
-                    )
-                })
-            })
-        })
-    },
-    loginAdmin: function(req,res){
-        console.log("Reçus")
-        var email = req.param('email');
-        var password = req.param('password');
-        if(!email || !password) return res.json(401,{err:'email and password are required'})
-        Employee.findOne({email:email}, function(err,employee){
-            if(err)console.log(err);
-            if(err) return res.json(403, {err:'forbidden 1'});
-            if(!employee){
-                console.log("Erreur1"); 
-                return res.json(401,{err:'invalid email or password'});
-            }
-            if(employee.nvAuto != 2){ return res.json(401,{err:"vous n'avez pas les droits nécessaires"});}
-            Employee.comparePassword(password,employee, function(err,valid){
-                if(err)console.log(err);
-                if(err) return res.json(403, {err:'forbidden 2'});
-                if(!valid){console.log("Erreur2"); return res.json(401,{err:'invalid email or password'});}
-                token = JwtHandler.generate({email:employee.email,id: employee.id});
-                employee.token = token;
-                employee.save(function(err){
-                    if(err){
-                        console.log(err); 
-                        return res.json(403, {err:'forbidden 3'});
-                    } 
-                _EmployeeController.ListUserForManager(req,res);
-                })
-            })
-        })
-    },
-    refresh: function(req,res){
-       var employee = req.employee || false;
 
-        if(employee){
-            var decoded = JwtHandler.decode(employee.refreshToken);
-            if(decoded.email === user.email){
-                token = JwtHandler.generate({email:employee.email,id: employee.id});
-                employee.token = token;
-                employee.save(function(err){
-                    if(err) return res.json(403, {err:'forbidden'});
-                    return res.json(
-                        {
-                            employee: employee,
-                            token:token
-                        }
-                    )
-                })
-            }
-        }else{
-            return res.json(403, {err:'forbidden'});
-        }
-    }
+    signin: function (req,res)
+    {
+        passport.authenticate('local',
+        onPassportAuth.bind(this,req,res))(req,res);
+    },
+    signup : function (req,res) {
+        User
+            .create(_.omit(req.allParams(),'id'))
+            .then(function(user){
+                return {
+                    user: user,
+                    token: SecurityService.createToken(user)
+                }
+
+            })
+            .then(res.created)
+            .catch(res.serverError)
+    },
+	signout : function (req, res) {
+		res.cookie("access_token", "", { httpOnly: true, expires: new Date(0) })
+		return res.redirect('/');
+	}
 };
-
