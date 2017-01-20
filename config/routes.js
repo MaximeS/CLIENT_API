@@ -35,10 +35,74 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
+  '/problems':
+  {
+    view: 'problems'
+  },
+  '/missions':
+  {
+    view:'missions'
+  },
+  '/vehicules':
+  {
+    view:'mesvehicules'
+  },
+  '/addsite':
+  {
+    view:'addsite'
+  },
+  '/addmission':
+  {
+    view:'addmission'
+  },
+  '/assignTask':
+  {
+    view:'assignTask'
+  },
+  '/assignProb':
+  {
+    view:'assignProb'
+  },
+  '/addvehicule':
+  {
+    view:'addvehicule'
+  },
+  '/addcolis':
+  {
+    view:'addcolis'
+  },
+  '/gestionvehicule':
+  {
+    view:'gestionvehicule'
+  },
+  '/mymission':
+  {
+    view:'mymission'
+  },
+  '/colis':
+  {
+    view:'colis'
+  },
+  '/myprob':
+  {
+    view:'myprob'
+  },
+
+
 
   'post /auth/signin'  : 'AuthController.signin',
   'post /auth/signup'  : 'AuthController.signup',
   'post /auth/signout'	   : 'AuthController.signout',
+  'get /mesroutiers' : 'UserController.getRoutiers',
+  'get /mestechs' : 'UserController.getTech',
+  'post /resolveproblem' : 'AnomalyController.resolveProblem',
+  'post /addresolver' : 'AnomalyController.sendSomeone',
+  'post /addmissionary' : 'MissionController.sendSomeone',
+  'post /adduservehi' : 'VehiculeController.attributeVehicule',
+  'post /assigntask' : 'UserController.assignTask',
+  'post /assignprob' : 'UserController.assignProb', 
+  'get /api/mymission': 'MissionController.myMission',
+  'post /finishMission' : 'MissionController.finishMission',
 
   /***************************************************************************
   *                                                                          *

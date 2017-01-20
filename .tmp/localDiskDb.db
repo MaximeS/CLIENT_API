@@ -1,0 +1,297 @@
+{
+  "data": {
+    "alert": [],
+    "anomaly": [],
+    "logconnexion": [],
+    "loguser": [],
+    "mission": [],
+    "site": [],
+    "user": [],
+    "vehicule": []
+  },
+  "schema": {
+    "alert": {
+      "employeeId": {
+        "type": "string"
+      },
+      "codeAlert": {
+        "type": "string"
+      },
+      "message": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "anomaly": {
+      "mission": {
+        "type": "integer",
+        "model": "mission",
+        "foreignKey": true,
+        "alias": "mission"
+      },
+      "nom": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "resolver": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "resolver"
+      },
+      "resolved": {
+        "type": "boolean",
+        "defaultsTo": false
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "logconnexion": {
+      "employeeId": {
+        "type": "string"
+      },
+      "message": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "loguser": {
+      "employeeId": {
+        "type": "string"
+      },
+      "message": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "mission": {
+      "name": {
+        "type": "string"
+      },
+      "user": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "user"
+      },
+      "siteD": {
+        "type": "integer",
+        "model": "site",
+        "foreignKey": true,
+        "alias": "siteD"
+      },
+      "siteA": {
+        "type": "integer",
+        "model": "site",
+        "foreignKey": true,
+        "alias": "siteA"
+      },
+      "heureD": {
+        "type": "integer"
+      },
+      "heureF": {
+        "type": "integer"
+      },
+      "valider": {
+        "type": "boolean"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "site": {
+      "nom": {
+        "type": "string"
+      },
+      "typeS": {
+        "type": "string"
+      },
+      "numTelS": {
+        "type": "integer"
+      },
+      "adresse": {
+        "type": "string"
+      },
+      "positionX": {
+        "type": "float"
+      },
+      "positionY": {
+        "type": "float"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "user": {
+      "isAdmin": {
+        "type": "boolean",
+        "defaultsTo": false
+      },
+      "firstName": {
+        "type": "string"
+      },
+      "lastName": {
+        "type": "string"
+      },
+      "age": {
+        "type": "integer"
+      },
+      "birthDate": {
+        "type": "date"
+      },
+      "phoneNumber": {
+        "type": "string"
+      },
+      "emailAddress": {
+        "type": "string",
+        "unique": true
+      },
+      "password": {
+        "type": "string"
+      },
+      "isAdminService": {
+        "type": "boolean",
+        "defaultsTo": false
+      },
+      "serviceCode": {
+        "type": "integer",
+        "defaultsTo": 0
+      },
+      "mission": {
+        "type": "integer",
+        "model": "mission",
+        "foreignKey": true,
+        "alias": "mission"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    },
+    "vehicule": {
+      "user": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "user"
+      },
+      "latitude": {
+        "type": "float"
+      },
+      "longitude": {
+        "type": "float"
+      },
+      "tempsArrêt": {
+        "type": "float"
+      },
+      "accélération": {
+        "type": "float"
+      },
+      "vitesseMax": {
+        "type": "integer"
+      },
+      "vitesseMin": {
+        "type": "integer"
+      },
+      "vitesseMoy": {
+        "type": "float"
+      },
+      "immatriculation": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime"
+      },
+      "updatedAt": {
+        "type": "datetime"
+      }
+    }
+  },
+  "counters": {
+    "alert": {},
+    "anomaly": {},
+    "logconnexion": {},
+    "loguser": {},
+    "mission": {},
+    "site": {},
+    "user": {},
+    "vehicule": {}
+  }
+}

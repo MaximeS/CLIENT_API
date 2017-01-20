@@ -6,7 +6,6 @@
  */
 
 module.exports = {
-	
 	getLogConnexionById: function (req,res) {
 		return res.ok(LogConnexion.findOne({
 			employeeId: req.param('employeeId')
